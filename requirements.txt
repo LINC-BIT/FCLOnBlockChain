@@ -1,0 +1,12 @@
+torch
+numpy==1.21
+timm==0.4.12
+matplotlib
+pandas
+tqdm
+opencv-python
+quadprog
+tensorboard
+pot
+jieba
+scikit-learn
