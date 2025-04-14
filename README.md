@@ -19,6 +19,10 @@ For CV application, we supports 5 models:
 - [WideResNet](https://arxiv.org/pdf/1605.07146): WideResNet (Wide Residual Network) is a deep learning model that builds on the ResNet architecture by increasing the width of residual blocks (using more feature channels) to improve performance and efficiency while reducing the depth of the network.
 - [Vit](https://arxiv.org/abs/2010.11929): The Vision Transformer (ViT) applies the Transformer architecture to image recognition tasks. It segments the image into multiple patches, then inputs these small blocks as sequence data into the Transformer model, using the self-attention mechanism to capture global and local information within the image, thereby achieving efficient image classification.
 
+For NLP application, it cupports 6 models:
+- [RNN](https://arxiv.org/pdf/1406.1078): RNN (Recurrent Neural Network) is a type of neural network specifically designed for sequential data, excelling at handling time series and natural language with temporal dependencies.
+- [LSTM](https://arxiv.org/pdf/1406.1078): LSTM (Long Short-Term Memory) is a special type of RNN that can learn long-term dependencies, suitable for tasks like time series analysis and language modeling.
+- [Bert](https://arxiv.org/abs/1810.04805): BERT (Bidirectional Encoder Representations from Transformers) is a pre-trained language representation model based on the Transformer architecture, which captures contextual information in text through deep bidirectional training. The BERT model excels in natural language processing (NLP) tasks and can be used for various applications such as text classification, question answering systems, and named entity recognition.
 ## 2 How to get started
 ### 2.1 Setup
 **Requirements**
