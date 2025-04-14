@@ -1,0 +1,58 @@
+server:
+  port: 9091
+spring:
+  application:
+    ## 指定服务名称，在nacos中的名字
+    name: upload-service
+  cloud:
+    nacos:
+      discovery:
+        # nacos的服务地址，nacos-server中IP地址:端口号
+#        server-addr: 127.0.0.1:8848
+        server-addr: 10.1.114.115:8848
+        metadata: # 额外的元数据信息
+#          upload-addr: 127.0.0.1:9091
+          upload-addr: 10.1.114.115:9091
+          weight: 2
+  servlet:
+    multipart:
+      # 单文件大小限制
+      max-file-size: 2000MB
+      # 总上传大小限制
+      max-request-size: 2000MB
+  datasource:
+    # url: jdbc:mysql://127.0.0.1:3306/fcl?useSSL=false&serverTimezone=UTC # jdbc:mysql://10.1.114.115:3306/animalDjango?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://10.1.114.115:3306/animalDjango?useSSL=false&serverTimezone=UTC
+    username: root
+    # password: qk4321 # dhj19991101
+    password: dhj19991101
+  redis:
+#    host: 127.0.0.1 # 10.1.114.115 # Redis 服务器地址
+    host: 10.1.114.115 # Redis 服务器地址
+#    port: 6379 # 6479 # Redis 服务器端口
+    port: 6479 # Redis 服务器端口
+#    password: qk4321 # qk1234 # Redis 密码
+    password: qk1234 # Redis 密码
+    lettuce:
+      pool:
+        max-active: 8 # 最大连接数
+        max-wait: -1 # 最大等待时间
+        max-idle: 8 # 最大空闲连接数
+        min-idle: 0 # 最小空闲连接数
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+management:
+  endpoints:
+    web:
+      exposure:
+        ## yml文件中存在特殊字符，必须用单引号包含，否则启动报错
+        include: '*'
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+minio:
+#  endpoint: http://127.0.0.1:9000
+  endpoint: http://10.1.114.115:9000
+  access-key: admin
+  secret-key: qk123456
+  bucket-name: default

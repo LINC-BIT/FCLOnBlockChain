@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.server.mapper.DataInfoMapper">
+
+    <insert id="insertDataInfo" parameterType="com.example.server.entity.DataInfo">
+        INSERT INTO data_info (file_name, submitter_id, task_id, file_bucket, file_key, version, data_status, submit_time, metadata)
+        VALUES (#{fileName}, #{submitterId}, #{taskId}, #{fileBucket}, #{fileKey}, #{version}, #{dataStatus}, now(), #{metadata})
+    </insert>
+
+    <resultMap id="DataInfoResultMap" type="com.example.server.entity.DataInfo">
+        <id property="id" column="id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="submitterId" column="submitter_id"/>
+        <result property="fileBucket" column="file_bucket"/>
+        <result property="fileKey" column="file_key"/>
+        <result property="version" column="version"/>
+        <result property="dataStatus" column="data_status"/>
+        <result property="submitTime" column="submit_time"/>
+        <result property="metadata" column="metadata"/>
+    </resultMap>
+
+    <select id="getAllDataInfo" resultMap="DataInfoResultMap">
+        SELECT * FROM data_info
+    </select>
+
+    <select id="getAllDataInfoByParams" resultMap="DataInfoResultMap">
+        SELECT
+            *
+        FROM data_info
+        WHERE submitter_id = #{submitterId}
+          AND task_id = #{taskId}
+          AND version = #{version}
+    </select>
+
+<!--    SELECT-->
+<!--    *-->
+<!--    FROM data_info-->
+<!--    WHERE task_id = #{taskId};-->
+    <select id="getAllDataInfoByTaskId" resultMap="DataInfoResultMap">
+        SELECT d.*
+        FROM data_info d
+        JOIN (
+            SELECT submitter_id, MAX(submit_time) AS max_upload_time
+            FROM data_info
+            WHERE task_id = #{taskId}
+            GROUP BY submitter_id
+        ) AS latest
+        ON d.submitter_id = latest.submitter_id AND d.submit_time = latest.max_upload_time
+        WHERE d.task_id = #{taskId}
+    </select>
+
+</mapper>

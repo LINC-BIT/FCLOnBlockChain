@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.server.mapper.TaskInfoMapper">
+
+    <insert id="insertTask" parameterType="com.example.server.entity.TaskInfo">
+        INSERT INTO task_info (task_name, submitter_id, task_type, task_status, submit_time, update_time, file_number, metadata)
+        VALUES (#{taskName}, #{submitterId}, #{taskType}, #{taskStatus}, now(), now(), #{fileNumber}, #{metadata})
+        <selectKey keyColumn="id" keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateTaskStatusById" parameterType="com.example.server.entity.TaskInfo">
+        UPDATE task_info
+        SET task_status = #{taskStatus},
+            update_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <resultMap id="TaskInfoResultMap" type="com.example.server.entity.TaskInfo">
+        <id property="id" column="id"/>
+        <result property="taskName" column="task_name"/>
+        <result property="submitterId" column="submitter_id"/>
+        <result property="taskType" column="task_type"/>
+        <result property="taskStatus" column="task_status"/>
+        <result property="submitTime" column="submit_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="fileNumber" column="file_number"/>
+        <result property="metadata" column="metadata"/>
+    </resultMap>
+
+    <select id="getTasksByTaskName" parameterType="String" resultMap="TaskInfoResultMap">
+        SELECT *
+        FROM task_info
+        WHERE task_name = #{taskName}
+    </select>
+
+    <select id="getAllTasks" resultMap="TaskInfoResultMap">
+        SELECT * FROM task_info
+    </select>
+</mapper>
