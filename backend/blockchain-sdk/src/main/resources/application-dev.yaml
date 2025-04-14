@@ -1,0 +1,10 @@
+server:
+  port: 18001
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 111
+    url: jdbc:mysql://10.1.111.111:3306/chain?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=GMT%2B8
+    type: com.zaxxer.hikari.HikariDataSource

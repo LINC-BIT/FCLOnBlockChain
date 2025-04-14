@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.server.mapper.FileInfoMapper">
+    <insert id="insert">
+        INSERT INTO file_info
+            (id, origin_file_name, file_name, file_path, file_size, create_time, file_hash)
+        VALUES
+            (#{id}, #{originFileName}, #{fileName}, #{filePath}, #{fileSize}, #{createTime}, #{fileHash});
+    </insert>
+
+    <resultMap id="FileInfoResultMap" type="com.example.server.entity.FileInfo">
+        <id column="id" property="id"/>
+        <result column="origin_file_name" property="originFileName"/>
+        <result column="file_name" property="fileName"/>
+        <result column="file_path" property="filePath"/>
+        <result column="file_size" property="fileSize"/>
+        <result column="create_time" property="createTime"/>
+        <result column="file_hash" property="fileHash"/>
+    </resultMap>
+
+    <select id="selectByFileHash" parameterType="String" resultMap="FileInfoResultMap">
+        SELECT
+            id,
+            origin_file_name,
+            file_name,
+            file_path,
+            file_size,
+            create_time,
+            file_hash
+        FROM file_info
+        WHERE file_hash = #{fileHash}
+    </select>
+
+    <select id="selectByFileName" parameterType="String" resultMap="FileInfoResultMap">
+        SELECT
+            id,
+            origin_file_name,
+            file_name,
+            file_path,
+            file_size,
+            create_time,
+            file_hash
+        FROM file_info
+        WHERE file_hash = #{fileName}
+    </select>
+</mapper>

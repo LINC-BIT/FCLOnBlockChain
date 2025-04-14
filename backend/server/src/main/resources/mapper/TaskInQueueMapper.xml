@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.server.mapper.TaskInQueueMapper">
+
+    <insert id="insertTask" parameterType="com.example.server.entity.Task">
+        INSERT INTO task_in_queue (task_id, priority, submit_time, estimated_duration, status, task_type, submitter, deadline, description)
+        VALUES (#{taskId}, #{priority}, #{submitTime}, #{estimatedDuration}, #{status}, #{taskType}, #{submitter},
+                #{deadline}, #{description})
+    </insert>
+
+    <select id="fetchInQueueTasks" resultType="com.example.server.entity.Task">
+        SELECT * FROM task_in_queue WHERE status = 'IN_QUEUE'
+    </select>
+
+    <update id="markTaskAsCompleted" parameterType="int">
+        UPDATE task_in_queue SET status = 'COMPLETED' WHERE task_id = #{taskId}
+    </update>
+
+</mapper>
